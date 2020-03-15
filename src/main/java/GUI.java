@@ -47,15 +47,28 @@ public class GUI {
                 "Please enter a valid integer postfix expression. Valid symbols: +-*/()");
         expressionText.setBorder(BorderFactory.createEmptyBorder());
 
-        JScrollPane scroll = new JScrollPane(expressionText);
-        scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        JScrollPane scrollExpression = new JScrollPane(expressionText);
+        scrollExpression.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollExpression.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+
 
         // Creates result textfield, makes it uneditable, change font and makes transparent.
         JTextField resultText = new JTextField();
         resultText.setEditable(false);
         resultText.setFont(f);
         resultText.setBackground(new Color(0, 0, 0, 0));
+        resultText.setBorder(BorderFactory.createEmptyBorder());
+        resultText.setOpaque(false);
+
+        JScrollPane scrollResult = new JScrollPane(resultText);
+        scrollResult.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollResult.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        scrollResult.setBackground(new Color(0, 0, 0, 0));
+        JViewport g = new JViewport();
+        g.setBackground(new Color(0, 0, 0, 0));
+        g.setOpaque(false);
+        scrollResult.setViewport(g);
+        scrollResult.setOpaque(false);
 
         JButton evaluate = new JButton("Construct Tree");
         evaluate.setFont(f);
@@ -80,7 +93,7 @@ public class GUI {
         c.insets = new Insets(5, 5, 5, 5);
         c.weightx = 3;
         c.weighty = 1;
-        content.add(scroll, c);
+        content.add(scrollExpression, c);
 
         // Sets constraints for the evaluate button, creates an action listener, and adds it to the
         // panel
@@ -126,7 +139,7 @@ public class GUI {
         c.insets = new Insets(5, 5, 5, 5);
         c.weightx = 3;
         c.weighty = 1;
-        content.add(resultText, c);
+        content.add(scrollResult, c);
 
         return content;
     }
