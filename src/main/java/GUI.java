@@ -1,3 +1,12 @@
+/*
+ * Copyright (c) 2020.
+ * Author: Naomi Bonnin
+ * Class: CMSC 350
+ * Project: Project 2
+ * Date: 3/15/20, 3:38 PM
+ * Description:  Project 2 converts a postfix expression to an infix expression using a binary expression tree.  In addition, a *.txt file is created or appended in the root directory containing the psudo-assembly instructions needed to evaluate the expression.
+ */
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
@@ -9,18 +18,19 @@ Closing the GUI will terminate the application.
  */
 public class GUI {
 
-    static final Dimension d = new Dimension(600, 200);
+    //Creates the dimensions for the JFrame.
+    static final private Dimension d = new Dimension(600, 200);
 
     // Constructor to create and show the GUI
     public GUI() {
         JFrame frame = new JFrame("Three Address Generator");
-        frame.setPreferredSize(d);
+        frame.setPreferredSize(d); //Sets the size to the above dimension
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(threeGen()); // This line adds the actual content to the frame
-        frame.pack();
-        frame.setLocationRelativeTo(null); // Centers the window on the screen
-        frame.setVisible(true);
+        frame.pack();  //Removes any whitespace and ensure everything is where it should be
+        frame.setLocationRelativeTo(null); //Centers the window on the screen
+        frame.setVisible(true);  //Shows the window
     }
 
     // Method to create the actual content for the application
@@ -47,28 +57,25 @@ public class GUI {
                 "Please enter a valid integer postfix expression. Valid symbols: +-*/()");
         expressionText.setBorder(BorderFactory.createEmptyBorder());
 
+        //Inserts the expression textField into a scrollPane for long expressions
         JScrollPane scrollExpression = new JScrollPane(expressionText);
         scrollExpression.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollExpression.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
 
-        // Creates result textfield, makes it uneditable, change font and makes transparent.
+        // Creates result textfield, makes it uneditable, change font and makes transparent
         JTextField resultText = new JTextField();
         resultText.setEditable(false);
         resultText.setFont(f);
-        resultText.setBackground(new Color(0, 0, 0, 0));
+        resultText.setBackground(content.getBackground());
         resultText.setBorder(BorderFactory.createEmptyBorder());
-        resultText.setOpaque(false);
 
+        //Inserts the result textField into a scrollPane for long expressions.  Sets the background to
+        //transparent.
         JScrollPane scrollResult = new JScrollPane(resultText);
         scrollResult.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollResult.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-        scrollResult.setBackground(new Color(0, 0, 0, 0));
-        JViewport g = new JViewport();
-        g.setBackground(new Color(0, 0, 0, 0));
-        g.setOpaque(false);
-        scrollResult.setViewport(g);
-        scrollResult.setOpaque(false);
+        scrollResult.setBackground(content.getBackground());
 
         JButton evaluate = new JButton("Construct Tree");
         evaluate.setFont(f);
@@ -109,9 +116,7 @@ public class GUI {
         evaluate.addActionListener(
                 e -> {
                     try {
-                        Parser p = new Parser(expressionText.getText());
-                        ExpressionTree tr = new ExpressionTree(p.getParsedExpression());
-                        resultText.setText(tr.getInfix());
+                        resultText.setText(Converter.convert(expressionText.getText()));  //Performs the conversion
                     } catch (RuntimeException | IOException error) {
                         JOptionPane.showMessageDialog(content, "Invalid Expression: " + error.getMessage());
                     }
