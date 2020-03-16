@@ -3,9 +3,11 @@
  * Author: Naomi Bonnin
  * Class: CMSC 350
  * Project: Project 2
- * Date: 3/15/20, 3:38 PM
+ * Date: 3/15/20, 10:22 PM
  * Description:  Project 2 converts a postfix expression to an infix expression using a binary expression tree.  In addition, a *.txt file is created or appended in the root directory containing the psudo-assembly instructions needed to evaluate the expression.
  */
+
+package edu.student.umuc.nbonnin.project2;
 
 import java.util.ArrayList;
 
@@ -20,6 +22,10 @@ It throws a runtime exception which it receives from the method parse.  This exc
 It has a method, parse, which iterates through the string and converts it to the array based on whitespace
 delimiters between digits.
 It has a method getParsedExpression, which simply returns the parsed expression as a String[].
+Note: By design, there must be some delimiter between operands.  In this particular case, we know that that delimiter
+will always be either a space (in the case of operand followed by operand) or an operator (in the case there is no
+space between operator and operand).  We also know that the operators are, by definition, one character long
+and therefor we do not need to check if they are longer than a character.
  */
 public class Parser {
 
